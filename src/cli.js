@@ -1,16 +1,11 @@
 const TextUtils = require('./textUtils');
+const rules = require('./rules.js');
+
 
 const textUtils = new TextUtils();
+
 textUtils.readFile('input.txt');
-console.log(textUtils.compileWithRules([
-    {
-        match: "dass",
-        maxOccours: 2,
-        maxOccoursPerSentence: 1
-    },
-    {
-        match: "er",
-        maxOccours: 1,
-        maxOccoursPerSentence: 1
-    },
-]));
+
+const errors = textUtils.compileWithRules(rules);
+
+console.log(errors);

@@ -13,8 +13,9 @@ module.exports = class TextUtils {
     /**
      * @param {string} regexString
      */
-    find(regexString) {
-        const regex = new RegExp(regexString, "g");
+    find(regexString, ignoreCase) {
+        const flags = ignoreCase ? "gi" : "g";
+        const regex = new RegExp(regexString, flags);
         return this.input.match(regex);
     }
 
@@ -24,14 +25,16 @@ module.exports = class TextUtils {
     compileWithRules(rules) {
         const errors = [];
         rules.forEach((rule) => {
-            const result = this.find(rule.match);
-            if (result !== null) {
-                if (result.length > rule.maxOccours) {
-                    errors.push({
+            const matches = this.find(rule.match, rule.ignoreCase);
+            if (matches !== null) {
+                const response = rule.validate(matches);
+                if (response !== undefined) {
+                    const errorObject = {
+                        error: response,
                         match: rule.match,
-                        error: "Exceeds maximum occours",
-                        found: result.length,
-                    });
+                        found: matches.length
+                    };
+                    errors.push(errorObject);
                 }
             }
         });
