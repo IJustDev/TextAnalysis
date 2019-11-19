@@ -27,7 +27,7 @@ module.exports = class TextUtils {
         rules.forEach((rule) => {
             const matches = this.find(rule.match, rule.ignoreCase);
             if (matches !== null) {
-                const response = rule.validate(matches);
+                const response = rule.validate(matches, this.input);
                 if (response !== undefined) {
                     const errorObject = {
                         error: response,

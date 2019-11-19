@@ -5,6 +5,7 @@ const validators = new Validators();
 
 module.exports = [
     validators.maxOccours("er", 1),
+    validators.maxOccoursPercentage("A", 10),
     {
         match: "  ",
         validate: () => {
